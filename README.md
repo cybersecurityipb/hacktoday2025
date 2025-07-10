@@ -1,2 +1,5 @@
-# hacktoday2025
-repo soal hacktoday 2025
+# Hacktoday2025
+repo soal Hacktoday 2025
+
+# Format Flag
+### `^hacktoday{[ -~]+}$` ###
