@@ -1,4 +1,3 @@
-# Tidak berubah dari sebelumnya
 def shift_decipher_all(data: bytearray, key: int = 4) -> bytearray:
     result = bytearray()
     for i, byte in enumerate(data):
