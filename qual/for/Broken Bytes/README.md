@@ -9,8 +9,6 @@ Digital Forensic
 ## Description
 My image is corrupted and appears to have been encrypted by someone inexperienced. Fortunately, the encryption is flawed. The file isn't fully encrypted, but from what I can tell, it seems to have been shifted multiple times. Interestingly, the encryption key and the pattern appear to be the same. Can you help me uncover the encryption flow to restore the image?
 
-**Note:** Format flag `hacktoday{}`
-
 ## Solver
 
 ### Langkah 1: Analisis Header PNG
