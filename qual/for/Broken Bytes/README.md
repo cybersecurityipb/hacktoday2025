@@ -69,7 +69,7 @@ decrypt_full_png("file.png", "fix.png")
 ```
 
 ### Langkah 5: Verifikasi Hasil
-Setelah menjalankan script dekripsi solver.py, file PNG yang telah diperbaiki akan menampilkan gambar yang berisi flag.
+Setelah menjalankan script dekripsi `vsolver.py`, file PNG yang telah diperbaiki akan menampilkan gambar yang berisi flag.
 
 ## References
 - [PNG - Wikipedia](https://en.wikipedia.org/wiki/PNG)
