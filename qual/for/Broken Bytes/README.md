@@ -7,7 +7,9 @@ Nikoo
 Digital Forensic
 
 ## Description
-My image is corrupted and appears to have been encrypted by someone inexperienced. Fortunately, the encryption is flawed. The file isn't fully encrypted, but from what I can tell, it seems to have been shifted multiple times. Interestingly, the encryption key and the pattern appear to be the same. Can you help me uncover the encryption flow to restore the image?
+I found a PNG file that seems to be broken and I suspect someone tried to encrypt it badly. From a quick look, it seems like the file wasn't fully encrypted and only parts of the data were affected. Interestingly, the pattern of encryption looks suspiciously repetitive and I believe the encryption key and the pattern are the same. The data might have been shifted multiple times but not randomly. Can you figure out the encryption flow and help me restore the original image?
+
+**Note:** Format flag `hacktoday{}`
 
 ## Solver
 
@@ -67,7 +69,7 @@ decrypt_full_png("file.png", "fix.png")
 ```
 
 ### Langkah 5: Verifikasi Hasil
-Setelah menjalankan script dekripsi `solver.py`, file PNG yang telah diperbaiki akan menampilkan gambar yang berisi flag.
+Setelah menjalankan script dekripsi, file PNG yang telah diperbaiki akan menampilkan gambar yang berisi flag.
 
 ## References
 - [PNG - Wikipedia](https://en.wikipedia.org/wiki/PNG)
