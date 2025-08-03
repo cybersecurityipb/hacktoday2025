@@ -95,21 +95,6 @@ Berdasarkan hint "Is the fastest way always the best way?", mungkin ada pola ata
 - Pastikan semua 86 karakter valid
 - Cek format flag sesuai konvensi CTF
 
-### Tools yang Berguna
-- **Disassembler**: IDA Pro, Ghidra, Radare2
-- **Debugger**: GDB, x64dbg
-- **Scripting**: Python untuk implementasi reverse algorithm
-- **Symbolic Execution**: angr untuk automated solving
-
-### Kesimpulan
-Challenge ini menguji kemampuan:
-- Static analysis dan pemahaman kode C
-- Mathematical problem solving
-- Pattern recognition 
-- Tool usage dalam reverse engineering
-
-Kunci sukses adalah memahami pipeline transformasi dan membuat implementasi inverse yang akurat untuk setiap step.
-
 ## Flag
 ```
 hacktoday{dec0mp1le_th3n_4n4lyze_th3_funct1on_r3v3rse_th3_4lg0rithm_4nd_g3t_th3_fl4g5}
