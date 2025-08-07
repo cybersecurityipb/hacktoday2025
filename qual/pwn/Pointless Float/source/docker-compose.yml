@@ -1,0 +1,6 @@
+services:
+  pointless-float:
+    build: .
+    ports:
+      - 1470:5000
+    privileged: true
