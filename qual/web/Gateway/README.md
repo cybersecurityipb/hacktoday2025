@@ -3,6 +3,8 @@
 ## Description
 Pernah dengar Gerbang Torii? Katanya sih itu gerbang pembatas antara dunia manusia sama dunia arwah. Nggak semua orang bisa sembarangan lewat. Harus tenang, sopan, dan tau diri. Kalau nggak… ya bisa aja "tersesat" ke tempat yang nggak seharusnya.
 
+http://103.160.212.3:13810
+
 ## Release
 gateway.zip
 
