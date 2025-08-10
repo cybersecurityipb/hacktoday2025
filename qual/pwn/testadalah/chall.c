@@ -2,7 +2,6 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <unistd.h>
-// #include <string.h>
 
 char *TEST[10] = {0};
 
@@ -81,13 +80,4 @@ void setup()
     setvbuf(stdin, NULL, _IONBF, 0);
     setvbuf(stdout, NULL, _IONBF, 0);
     setvbuf(stderr, NULL, _IONBF, 0);
-
-    uint64_t seed64;
-    FILE *urand = fopen("/dev/urandom", "rb");
-    if (urand && fread(&seed64, sizeof(seed64), 1, urand) == 1)
-    {
-        srand((unsigned int)(seed64 & 0xFFFFFFFF));
-    }
-    if (urand)
-        fclose(urand);
 }
