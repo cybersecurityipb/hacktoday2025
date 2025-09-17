@@ -1,0 +1,13 @@
+services:
+
+  webapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: webapp
+    ports:
+      - "8069:80"
+    restart: always
+    environment:
+      - UPLOADS_DIR=/var/uploads/
+      - FLAG=hacktoday{dan_yap_soal_gampang_lagi_soal_gampang_lagi_gw_yang_buat_lagi_gw_yang_buat_lagi_cape_bang}

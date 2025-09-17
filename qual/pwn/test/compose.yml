@@ -2,5 +2,4 @@ services:
   test:
     build: .
     ports:
-      - 5000:5000
-    privileged: true  
+      - 1471:5000

