@@ -1,0 +1,6 @@
+services:
+  lagi:
+    build: .
+    image: lagi:latest
+    ports:
+      - "7069:1337"
