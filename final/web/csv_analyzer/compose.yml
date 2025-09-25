@@ -1,0 +1,20 @@
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "8969:80"
+    networks:
+      - ctf_net
+
+  backend:
+    build: ./backend
+    networks:
+      - ctf_net
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /app/uploads
+
+networks:
+  ctf_net:
+    driver: bridge

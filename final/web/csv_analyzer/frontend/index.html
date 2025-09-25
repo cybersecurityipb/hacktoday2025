@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Analyzer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .lds-dual-ring {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+        }
+        .lds-dual-ring:after {
+            content: " ";
+            display: block;
+            width: 16px;
+            height: 16px;
+            margin: 2px;
+            border-radius: 50%;
+            border: 3px solid #fff;
+            border-color: #fff transparent #fff transparent;
+            animation: lds-dual-ring 1.2s linear infinite;
+        }
+        @keyframes lds-dual-ring {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-200 flex items-center justify-center min-h-screen">
+
+    <div class="bg-gray-800 rounded-2xl shadow-2xl p-8 max-w-2xl w-full border border-gray-700">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-cyan-400">CSV Analyzer</h1>
+            <p class="text-gray-400 mt-2">Upload your CSV and get instant insights. Totally secure!</p>
+        </div>
+
+        <form id="upload-form">
+            <div id="drop-zone" class="bg-gray-700 p-8 rounded-lg border-2 border-dashed border-gray-500 text-center cursor-pointer transition-colors duration-300 hover:border-cyan-400">
+                <div class="flex flex-col items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
+                    <p class="mt-4 text-gray-400">Drag & Drop your CSV file here</p>
+                    <p class="text-gray-500 text-sm">or</p>
+                    <p class="font-semibold text-cyan-400">Click to select a file</p>
+                    <p id="file-name" class="text-green-400 mt-2 text-sm font-medium"></p>
+                </div>
+                <input type="file" id="file-input" name="file" class="hidden" accept=".csv">
+            </div>
+            <div class="flex justify-center">
+                 <button type="submit" id="upload-button" class="mt-6 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg>
+                    <span>Analyze</span>
+                    <div id="loader" class="hidden lds-dual-ring"></div>
+                </button>
+            </div>
+        </form>
+
+        <div id="result-container" class="mt-6">
+             <div class="bg-gray-900 p-4 rounded-lg">
+                <h3 class="font-semibold text-lg text-gray-300 border-b border-gray-700 pb-2 mb-2">Analysis Result</h3>
+                <pre id="result-output" class="text-sm text-green-400 whitespace-pre-wrap break-all overflow-x-auto"></pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const uploadForm = document.getElementById('upload-form');
+        const fileInput = document.getElementById('file-input');
+        const dropZone = document.getElementById('drop-zone');
+        const fileNameDisplay = document.getElementById('file-name');
+        const resultOutput = document.getElementById('result-output');
+        const loader = document.getElementById('loader');
+        const uploadButton = document.getElementById('upload-button');
+
+        const BACKEND_URL = 'http://localhost:8969/api';
+
+        dropZone.addEventListener('click', () => fileInput.click());
+
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length > 0) {
+                handleFileSelect(fileInput.files[0]);
+            }
+        });
+
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('bg-gray-600', 'border-cyan-400');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('bg-gray-600', 'border-cyan-400');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('bg-gray-600', 'border-cyan-400');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                fileInput.files = files;
+                handleFileSelect(files[0]);
+            }
+        });
+
+        uploadForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const file = fileInput.files[0];
+            if (file) {
+                await performAnalysis(file);
+            } else {
+                displayResult({ error: "Please select a file first." });
+            }
+        });
+
+        function handleFileSelect(file) {
+            if (file && (file.type === "text/csv" || file.name.toLowerCase().endsWith('.csv'))) {
+                fileNameDisplay.textContent = `Selected: ${file.name}`;
+                uploadButton.disabled = false;
+                resultOutput.textContent = '';
+            } else {
+                fileNameDisplay.textContent = "Invalid file type. Please select a CSV.";
+                uploadButton.disabled = true;
+            }
+        }
+
+        async function performAnalysis(file) {
+            setLoading(true);
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const uploadResponse = await fetch(`${BACKEND_URL}/upload`, { method: 'POST', body: formData });
+                const uploadResult = await uploadResponse.json();
+                if (!uploadResponse.ok) throw new Error(uploadResult.error || 'Upload failed');
+
+                const filename = uploadResult.filename;
+                const analyzeResponse = await fetch(`${BACKEND_URL}/analyze?file=${encodeURIComponent(filename)}`);
+                const analyzeResult = await analyzeResponse.json();
+                if (!analyzeResponse.ok) throw new Error(analyzeResult.error || 'Analysis failed');
+                
+                displayResult(analyzeResult);
+            } catch (error) {
+                displayResult({ error: error.message });
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        function displayResult(data) {
+            resultOutput.textContent = JSON.stringify(data, null, 2);
+        }
+
+        function setLoading(isLoading) {
+            if (isLoading) {
+                loader.classList.remove('hidden');
+                uploadButton.disabled = true;
+            } else {
+                loader.classList.add('hidden');
+                uploadButton.disabled = !fileInput.files[0];
+            }
+        }
+    </script>
+</body>
+</html>
