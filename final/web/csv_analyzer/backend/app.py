@@ -54,7 +54,7 @@ def analyze_file():
             
             if df[query_column].dtype == 'object':
                 query_value = df[query_column].mode()[0]
-                query_string = f"`{query_column}` == {query_value}"
+                query_string = f"`{query_column}` == '{query_value}'"
             else:
                 query_value = df[query_column].mean()
                 query_string = f"`{query_column}` > {query_value}"
@@ -64,11 +64,8 @@ def analyze_file():
                 query_result = query_result_df.head().to_json(orient='split')
                 query_result_count = len(query_result_df)
             except Exception:
-                return jsonify({
-                    "column" : str(query_column),
-                    "test2" : str(query_string),
-                })
-
+                pass
+            
         analysis = {
             "columns": df.columns.tolist(),
             "shape": list(df.shape),
