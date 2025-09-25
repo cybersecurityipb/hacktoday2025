@@ -6,6 +6,8 @@ Lagi, soalnya ditaruh di sebelah ga disentuh siapa tau taro disini laku soalnya 
 
 Note : my solver needs to run couple of times
 
+`Author : yqroo`
+
 ## Release
 - Dockerfile
 - chall
