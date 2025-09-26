@@ -1,11 +1,20 @@
-FROM ubuntu:noble as ubuntu
+FROM ubuntu:noble
 
-FROM pwn.red/jail
+EXPOSE 8000
 
-COPY --from=ubuntu / /srv
+RUN apt update
+RUN apt-get install -y socat
 
-WORKDIR /srv/app
-COPY flag.txt flag.txt
-COPY beginner run
-COPY libc.so.6 libc.so.6
-COPY ld-2.31.so ld-2.31.so
+RUN mkdir /pwn
+WORKDIR /pwn
+
+COPY flag.txt .
+COPY beginner .
+COPY ld-2.31.so .
+COPY libc.so.6 .
+
+RUN chmod -R 755 /pwn
+RUN chmod 700 /usr/bin/* /bin/* /tmp /dev/shm
+RUN chmod 755 /usr/bin/env /bin/dash /bin/bash /bin/sh /bin/cat /usr/bin/id /bin/ls
+
+CMD socat TCP-LISTEN:8000,reuseaddr,fork EXEC:/pwn/beginner,su=nobody

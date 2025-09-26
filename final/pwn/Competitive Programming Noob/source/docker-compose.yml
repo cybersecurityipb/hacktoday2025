@@ -1,6 +1,8 @@
 services:
   competitive-programming-noob:
+    container_name: competitive-programming-noob
     build: .
     ports:
-      - 1470:5000
-    privileged: true
+      - 1470:8000
+    restart: always
+    read_only: true
