@@ -14,4 +14,6 @@ RUN true \
     && rm -rf /tmp/contracts \
     && tr -d '\r' < /entrypoint.sh > /entrypoint2.sh \
     && cp /entrypoint2.sh  /entrypoint.sh \
+    && tr -d '\r' < /startup/96-start-launcher > /startup/96-start-launcher2 \
+    && cp /startup/96-start-launcher2  /startup/96-start-launcher \
     && true
