@@ -11,7 +11,7 @@ QUESTIONS = [
     },
     {
         "question": "List all child processes spawned by cmd.exe when file1.sus is executed. List them alphabetically. (Example: calc.exe, notepad.exe)",
-        "answer": "certutil.exe, Conhost.exe"
+        "answer": "certutil.exe, conhost.exe"
     },
     {
         "question": "Which malware family does file1.sus belong to? (Example: Lumma)",
@@ -22,8 +22,8 @@ QUESTIONS = [
         "answer": "Dell, 2021:08:19 14:03:52Z"
     },
     {
-        "question": "What is the inode number of file1.sus?",
-        "answer": "1125899906924902"
+        "question": "How many IO Blocks inside this file? (Example: 1200",
+        "answer": "512"
     },
     {
         "question": "How many macro streams were identified in file1.sus? List the streams that contain macros. (Example: 7; a,b,c,d,e,f,g)",
