@@ -12,5 +12,5 @@ RUN true \
     # Remove any partial vendored libs under contracts/ so they don't get compiled
     && forge build \
     && rm -rf /tmp/contracts \
+    && tr -d '\r' < /entrypoint.sh > /entrypoint.sh \
     && true
-    && tr -d '\r' < /entrypoint.sh > /entrypoint.sh
