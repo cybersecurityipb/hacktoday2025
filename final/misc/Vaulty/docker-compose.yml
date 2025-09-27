@@ -17,3 +17,4 @@ services:
       resources:
         limits:
           cpus: "1.0"
+    tty: true
