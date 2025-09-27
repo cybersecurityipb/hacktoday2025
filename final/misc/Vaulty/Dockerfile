@@ -16,5 +16,5 @@ RUN true \
     && cp /entrypoint2.sh  /entrypoint.sh \
     && tr -d '\r' < /startup/96-start-launcher > /startup/96-start-launcher2 \
     && cp /startup/96-start-launcher2  /startup/96-start-launcher \
-    && rm /startup/96-start-launcher2
+    && rm /startup/96-start-launcher2 \
     && true
