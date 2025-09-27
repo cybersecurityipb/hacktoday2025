@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  launcherr:
+  launcher:
     build:
       context: .
     ports:
