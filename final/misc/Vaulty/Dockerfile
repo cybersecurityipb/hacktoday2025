@@ -13,3 +13,4 @@ RUN true \
     && forge build \
     && rm -rf /tmp/contracts \
     && true
+    && tr -d '\r' < /entrypoint.sh > /entrypoint.sh
