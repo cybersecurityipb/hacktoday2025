@@ -22,8 +22,8 @@ QUESTIONS = [
         "answer": "Dell, 2021:08:19 14:03:52Z"
     },
     {
-        "question": "How many IO Blocks inside this file? (Example: 1200",
-        "answer": "512"
+        "question": "How many Filesystem Blocks inside this file? (Example: 1200)",
+        "answer": "56"
     },
     {
         "question": "How many macro streams were identified in file1.sus? List the streams that contain macros. (Example: 7; a,b,c,d,e,f,g)",
