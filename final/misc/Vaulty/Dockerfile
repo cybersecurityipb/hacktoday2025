@@ -13,5 +13,4 @@ RUN true \
     && forge build \
     && rm -rf /tmp/contracts \
     && tr -d '\r' < /entrypoint.sh > /entrypoint.sh \
-    && tail -f /dev/null \
     && true
